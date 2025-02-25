@@ -1,0 +1,218 @@
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.imgLoginPage{
+    width: 50%;
+    max-width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.formContent {
+    background-color: rgb(255, 255, 255);
+    width: 50%;
+    max-width: 50%;
+    height: 100%;
+    max-height: 100%;
+}
+
+h1{
+  text-align: center;
+  font-size:35px;
+  font-weight: 700;
+  padding-top: 40px;
+  margin-bottom: 15px;
+  color: rgb(0, 0, 0);
+}
+
+.loginForm{
+  background-color: #ededed;
+  margin: 10% 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  width: 70%;
+  border: 0.1px solid black;
+  box-shadow: 1px 1px 5px rgb(59, 4, 143);
+  border-radius: 10px;
+}
+
+.passwordButton{
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+}
+
+.inputDiv, .passwordDiv, .nameDiv{
+  width: 90%;
+  height: 10%;
+  margin-bottom: 30px;
+}
+
+.labelEmail, .labelPassword, .labelName{
+  margin-bottom: 8px;
+  display: block;
+  font-size:18px;
+  font-weight: 400;
+  color: rgb(80, 80, 80);
+}
+
+.email, .name{
+  padding: 5px 10px;
+  height: 60%;
+  width: 95%;
+  max-width: 95%;
+  border: 1px solid black;
+  border-radius: 20px;
+  font-size: 20px;
+  transition: 0.2s;
+}
+
+.divPasswordButton{
+  display: flex;
+  align-items: center;
+  background-color: white;
+  height: 60%;
+  width: 95%;
+  max-width: 95%;
+  border: 1px solid black;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+
+.eyeDiv{
+  display: flex;
+  align-items: center;
+}
+
+.password{
+  padding: 5px 10px;
+  height: 100%;
+  width: 91%;
+  max-width: 91%;
+  border-radius: 20px;
+  border: none;
+  font-size: 20px;
+  transition: 0.2s;
+}
+
+.password:focus{
+  outline: none;
+}
+
+.divPasswordButton:focus-within, .email:focus, .name:focus{
+  transform:translateY(-2px);
+  outline: none;
+  border-color: blue;
+}
+
+.divPasswordButton:hover, .email:hover, .name:hover{
+    transform:translateY(-3px);
+    outline: none;
+    border-color: blue;
+}
+
+.messageDiv{
+    margin-bottom: 30px;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 75%;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.messageDivError{
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 75%;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+}
+
+.messageDivSuccess{
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  width: 75%;
+  border: 1px solid greenyellow;
+  border-radius: 5px;
+  color: greenyellow;
+}
+
+.redirectloginText{
+  font-weight: 500;
+  color: rgb(112, 112, 112);
+  margin-bottom: 30px;
+}
+
+.goTologinPage{
+  color: purple;
+  text-decoration: none;
+  font-size: 16px;
+  cursor:pointer;
+}
+
+.goTologinPage:hover{
+  color: rgb(71, 5, 205);
+
+}
+
+.errorMessage{
+  color: red;
+}
+
+.successMessage{
+  color:greenyellow
+}
+
+.submitButton{
+  background-color: #13aa52;
+  border: 1px solid #13aa52;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  outline: 0;
+  padding: 10px 25px;
+  text-align: center;
+  transition: 0.5s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 25px;
+}
+
+.submitButton:hover {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+.submitButton:active {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(4px);
+}
+
+.submitButton:disabled{
+  background-color: rgba(19, 170, 82, 0.5);
+  border: 1px solid rgba(19, 170, 82, 0.5);
+  color: rgba(255, 255, 255. 0.5);
+}
