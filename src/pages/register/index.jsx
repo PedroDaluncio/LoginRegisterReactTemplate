@@ -9,15 +9,17 @@ export default function RegisterPage() {
 	const {
 		register,
 		handleSubmit,
-		getValues,
-		formState: { isSubmitting, isValid, errors }
+		formState: { isSubmitting, isValid }
 	} = useForm()
 	const [showPassword, setShowPassword] = useState(false)
 	const [message, setMessage] = useState("")
 	const [error, setError] = useState("")
 
 	const handleRegister = async (values) => {
-		throw Error
+		if (values.name === '' || values.email === '' || values.password === ''){
+			setMessage("Email, Nome ou senha inválidos, tente novamente.")
+			setError(true)
+		}
 	}
 
 	return (
@@ -58,13 +60,13 @@ export default function RegisterPage() {
 								placeholder="Insira a sua senha"
 								{...register("password", { required: "Campo Obrigatório" })}
 							/>
-							<div className={styles.eyeDiv} onClick={() => setShowPassword(!showPassword)}>
+							<button className={styles.eyeButton} onClick={() => setShowPassword(!showPassword)} type='button'>
 								{showPassword ? (
 									<Eye />
 								) : (
 									<EyeClosedIcon />
 								)}
-							</div>
+							</button>
 						</div>
 					</div>
 					<button

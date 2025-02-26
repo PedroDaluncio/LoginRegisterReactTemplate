@@ -75,6 +75,7 @@ h1{
 }
 
 .divPasswordButton{
+  position: relative;
   display: flex;
   align-items: center;
   background-color: white;
@@ -86,9 +87,16 @@ h1{
   transition: 0.2s;
 }
 
-.eyeDiv{
-  display: flex;
-  align-items: center;
+.eyeButton{
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  background: none;
+  border: none;
+}
+
+.eyeButton:hover{
+  cursor: pointer;
 }
 
 .password{
