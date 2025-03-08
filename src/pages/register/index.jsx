@@ -2,25 +2,39 @@ import styles from './register.module.css'
 import treeOfLife from '../../assets/treeOfLife.png'
 import { useForm } from "react-hook-form"
 import { useState } from 'react'
-import { EyeClosedIcon, Eye } from 'lucide-react'
+import { EyeClosedIcon, Eye, AlertCircle } from 'lucide-react'
 
 
 export default function RegisterPage() {
 	const {
 		register,
 		handleSubmit,
-		formState: { isSubmitting, isValid }
+		formState: { isSubmitting, isValid, errors }
 	} = useForm()
 	const [showPassword, setShowPassword] = useState(false)
 	const [message, setMessage] = useState("")
 	const [error, setError] = useState("")
 
 	const handleRegister = async (values) => {
+		setMessage("")
+		setError("")
 		if (values.name === '' || values.email === '' || values.password === ''){
 			setMessage("Email, Nome ou senha inválidos, tente novamente.")
 			setError(true)
 		}
-	}
+		const response = await fetch('http://192.168.0.102:5123/createAccount', {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({"name": values.name, "email": values.email, "password": values.password})
+		 })
+		const data = await response.json()
+		if (data.status === 200){
+			setMessage(data.success)
+		} else {
+			setMessage(data.error)
+			setError(true)
+		}
+		}
 
 	return (
 		<main>
@@ -36,23 +50,29 @@ export default function RegisterPage() {
 						<input
 							type="text"
 							id="name"
-							className={styles.name}
+							className={errors.name || error ? styles.nameError : styles.name}
 							placeholder="Insira seu nome"
-							{...register("name", { required: "Campo Obrigatório" })}
+							{...register("name", { required: "Campo Obrigatório!" })}
 						/>
+						{errors.name && (
+							<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.name.message}</span>
+						)}
 					</div>
 					<div className={styles.inputDiv}>
 						<label htmlFor="email" className={styles.labelEmail}>Email:</label>
 						<input
-							type="email"
+							type="text"
 							id="email"
-							className={styles.email}
+							className={errors.email || error ? styles.emailError :styles.email}
 							placeholder="Insira o seu email"
 							{...register("email", { required: "Campo Obrigatório" })} />
+						{errors.email && (
+						<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.email.message}</span>
+						)}
 					</div>
 					<div className={styles.passwordDiv}>
 						<label htmlFor="password" className={styles.labelPassword}>Senha:</label>
-						<div className={styles.divPasswordButton}>
+						<div className={errors.password || error ? styles.passwordErrorDiv : styles.divPasswordButton}>
 							<input
 								type={!showPassword ? "password" : "text"}
 								id="password"
@@ -68,13 +88,17 @@ export default function RegisterPage() {
 								)}
 							</button>
 						</div>
+						{errors.password && (
+						<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.password.message}</span>
+						)}
 					</div>
 					<button
 						type="submit"
 						className={styles.submitButton}
 						disabled={
 							!isValid ||
-							isSubmitting}>
+							isSubmitting}
+					>
 						Criar Conta
 					</button>
 					<div className={
@@ -90,9 +114,9 @@ export default function RegisterPage() {
 					>
 						{message && (
 							error ? (
-								<span className={styles.errorMessage}>{message}</span>
+								<span className={styles.errorMessage}> <AlertCircle color='red' size={22}/> {message}</span>
 							) : (
-								<span className={styles.successMessage}>{message}</span>
+								<span className={styles.successMessage}> <AlertCircle color='green' size={22}/> {message}</span>
 							)
 						)}
 					</div>

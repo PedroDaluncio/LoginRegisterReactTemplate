@@ -41,18 +41,10 @@ h1{
   border-radius: 10px;
 }
 
-.passwordButton{
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  position: relative;
-  top: 5px;
-}
-
 .inputDiv, .passwordDiv, .nameDiv{
   width: 90%;
   height: 10%;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .labelEmail, .labelPassword, .labelName{
@@ -74,6 +66,17 @@ h1{
   transition: 0.2s;
 }
 
+.emailError, .nameError{
+  padding: 5px 10px;
+  height: 60%;
+  width: 95%;
+  max-width: 95%;
+  border: 1px solid red;
+  border-radius: 20px;
+  font-size: 20px;
+  transition: 0.2s;
+}
+
 .divPasswordButton{
   position: relative;
   display: flex;
@@ -83,6 +86,19 @@ h1{
   width: 95%;
   max-width: 95%;
   border: 1px solid black;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+
+.passwordErrorDiv{
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  height: 60%;
+  width: 95%;
+  max-width: 95%;
+  border: 1px solid red;
   border-radius: 20px;
   transition: 0.2s;
 }
@@ -97,6 +113,14 @@ h1{
 
 .eyeButton:hover{
   cursor: pointer;
+}
+
+.errorText{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: red;
+  margin: 5px 0;
 }
 
 .password{
@@ -114,7 +138,7 @@ h1{
   outline: none;
 }
 
-.divPasswordButton:focus-within, .email:focus, .name:focus{
+.divPasswordButton:focus-within, .email:focus, .name:focus, .emailError:focus, .nameError:focus{
   transform:translateY(-2px);
   outline: none;
   border-color: blue;
@@ -136,6 +160,7 @@ h1{
     width: 75%;
     border: 1px solid grey;
     border-radius: 5px;
+    gap: 20px;
 }
 
 .messageDivError{
@@ -148,6 +173,7 @@ h1{
     border: 1px solid red;
     border-radius: 5px;
     color: red;
+    gap: 20px;
 }
 
 .messageDivSuccess{
@@ -160,6 +186,7 @@ h1{
   border: 1px solid greenyellow;
   border-radius: 5px;
   color: greenyellow;
+  gap: 20px;
 }
 
 .redirectloginText{
