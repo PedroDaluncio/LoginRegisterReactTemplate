@@ -41,7 +41,7 @@ h1{
   border-radius: 10px;
 }
 
-.inputDiv, .passwordDiv, .nameDiv{
+.inputDiv, .passwordDiv, .nameDiv, .confirmPasswordDiv{
   width: 90%;
   height: 10%;
   margin-bottom: 40px;

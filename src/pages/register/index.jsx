@@ -12,29 +12,39 @@ export default function RegisterPage() {
 		formState: { isSubmitting, isValid, errors }
 	} = useForm()
 	const [showPassword, setShowPassword] = useState(false)
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 	const [message, setMessage] = useState("")
 	const [error, setError] = useState("")
+	const [confirmPassword, setConfirmPassword] = useState("")
+	const [confirmPasswordError, showConfirmPasswordError] = useState("")
 
 	const handleRegister = async (values) => {
 		setMessage("")
 		setError("")
-		if (values.name === '' || values.email === '' || values.password === ''){
+		if (values.password != confirmPassword){
+			showConfirmPasswordError("As senhas devem ser iguais!")
+			return
+		}
+
+		if (values.name === '' || values.email === '' || values.password === '') {
 			setMessage("Email, Nome ou senha inválidos, tente novamente.")
 			setError(true)
+			return
 		}
+
 		const response = await fetch('http://192.168.0.102:5123/createAccount', {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({"name": values.name, "email": values.email, "password": values.password})
-		 })
+			body: JSON.stringify({ "name": values.name, "email": values.email, "password": values.password })
+		})
 		const data = await response.json()
-		if (data.status === 200){
+		if (data.status === 200) {
 			setMessage(data.success)
 		} else {
 			setMessage(data.error)
 			setError(true)
 		}
-		}
+	}
 
 	return (
 		<main>
@@ -55,7 +65,7 @@ export default function RegisterPage() {
 							{...register("name", { required: "Campo Obrigatório!" })}
 						/>
 						{errors.name && (
-							<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.name.message}</span>
+							<span className={styles.errorText}> <AlertCircle color='red' size={22} /> {errors.name.message}</span>
 						)}
 					</div>
 					<div className={styles.inputDiv}>
@@ -63,16 +73,16 @@ export default function RegisterPage() {
 						<input
 							type="text"
 							id="email"
-							className={errors.email || error ? styles.emailError :styles.email}
+							className={errors.email || error ? styles.emailError : styles.email}
 							placeholder="Insira o seu email"
 							{...register("email", { required: "Campo Obrigatório" })} />
 						{errors.email && (
-						<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.email.message}</span>
+							<span className={styles.errorText}> <AlertCircle color='red' size={22} /> {errors.email.message}</span>
 						)}
 					</div>
 					<div className={styles.passwordDiv}>
 						<label htmlFor="password" className={styles.labelPassword}>Senha:</label>
-						<div className={errors.password || error ? styles.passwordErrorDiv : styles.divPasswordButton}>
+						<div className={errors.password || error || confirmPasswordError ? styles.passwordErrorDiv : styles.divPasswordButton}>
 							<input
 								type={!showPassword ? "password" : "text"}
 								id="password"
@@ -89,7 +99,30 @@ export default function RegisterPage() {
 							</button>
 						</div>
 						{errors.password && (
-						<span className={styles.errorText}> <AlertCircle color='red' size={22}/> {errors.password.message}</span>
+							<span className={styles.errorText}> <AlertCircle color='red' size={22} /> {errors.password.message}</span>
+						)}
+					</div>
+					<div className={styles.confirmPasswordDiv}>
+						<label htmlFor="confirmPassword" className={styles.labelPassword}>Confirme sua senha:</label>
+						<div className={errors.password || error || confirmPasswordError ? styles.passwordErrorDiv : styles.divPasswordButton}>
+							<input
+								type={!showConfirmPassword ? "password" : "text"}
+								id="confirmPassword"
+								className={styles.password}
+								placeholder="Confirme a senha"
+								onChange={(event) => setConfirmPassword(event.target.value)}
+
+							/>
+							<button className={styles.eyeButton} onClick={() => setShowConfirmPassword(!showConfirmPassword)} type='button'>
+								{showConfirmPassword ? (
+									<Eye />
+								) : (
+									<EyeClosedIcon />
+								)}
+							</button>
+						</div>
+						{confirmPasswordError !== "" && (
+							<span className={styles.errorText}> <AlertCircle color='red' size={22} /> {confirmPasswordError}</span>
 						)}
 					</div>
 					<button
@@ -97,7 +130,8 @@ export default function RegisterPage() {
 						className={styles.submitButton}
 						disabled={
 							!isValid ||
-							isSubmitting}
+							isSubmitting
+						}
 					>
 						Criar Conta
 					</button>
@@ -114,9 +148,9 @@ export default function RegisterPage() {
 					>
 						{message && (
 							error ? (
-								<span className={styles.errorMessage}> <AlertCircle color='red' size={22}/> {message}</span>
+								<span className={styles.errorMessage}> <AlertCircle color='red' size={22} /> {message}</span>
 							) : (
-								<span className={styles.successMessage}> <AlertCircle color='green' size={22}/> {message}</span>
+								<span className={styles.successMessage}> <AlertCircle color='green' size={22} /> {message}</span>
 							)
 						)}
 					</div>
