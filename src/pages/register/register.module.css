@@ -134,6 +134,13 @@ h1{
   transition: 0.2s;
 }
 
+.passwordValidation{
+  width: 95%;
+  max-width: 95%;
+  font-size: 13px;
+  margin-left: 20px;
+}
+
 .password:focus{
   outline: none;
 }

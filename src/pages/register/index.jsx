@@ -17,6 +17,11 @@ export default function RegisterPage() {
 	const [error, setError] = useState("")
 	const [confirmPassword, setConfirmPassword] = useState("")
 	const [confirmPasswordError, showConfirmPasswordError] = useState("")
+	const [containSpecial, setContainSpecial] = useState(false)
+	const [containUpper, setContainUpper] = useState(false)
+	const [containNumber, setContainNumber] = useState(false)
+	const [isLong, setIsLong] = useState(false)
+	const [isPasswordValid, setIsPasswordValid] = useState(true)
 
 	const handleRegister = async (values) => {
 		setMessage("")
@@ -45,6 +50,24 @@ export default function RegisterPage() {
 			setError(true)
 		}
 	}
+
+	const verifyPassword = (value) => {
+    const formatSpecial = /[^a-zA-Z0-9]/;
+    const formatNumber = /[0-9]/;
+    const formatUpper = /[A-Z]/;
+
+    const hasSpecial = formatSpecial.test(value);
+    const hasNumber = formatNumber.test(value);
+    const hasUpper = formatUpper.test(value);
+    const isLongEnough = value.length >= 8;
+
+    setContainSpecial(hasSpecial);
+    setContainNumber(hasNumber);
+    setContainUpper(hasUpper);
+    setIsLong(isLongEnough);
+
+    setIsPasswordValid(hasNumber && hasSpecial && hasUpper && isLongEnough);
+};
 
 	return (
 		<main>
@@ -89,6 +112,7 @@ export default function RegisterPage() {
 								className={styles.password}
 								placeholder="Insira a sua senha"
 								{...register("password", { required: "Campo Obrigatório" })}
+								onChange={(event) => verifyPassword(event.target.value)}
 							/>
 							<button className={styles.eyeButton} onClick={() => setShowPassword(!showPassword)} type='button'>
 								{showPassword ? (
@@ -98,6 +122,12 @@ export default function RegisterPage() {
 								)}
 							</button>
 						</div>
+						<ul className={styles.passwordValidation}> A senha deve conter:
+							<li style={containSpecial === true ? {color: 'green'} : {color: 'red'}}>Pelo menos um símbolo</li>
+							<li style={containUpper === true ? {color: 'green'} : {color: 'red'}}>Uma letra maiúscula</li>
+							<li style={containNumber === true ? {color: 'green'} : {color: 'red'}}>Pelo menos um número</li>
+							<li style={isLong === true ? {color: 'green'} : {color: 'red'}}>No mínimo 8 caracteres</li>
+						</ul>
 						{errors.password && (
 							<span className={styles.errorText}> <AlertCircle color='red' size={22} /> {errors.password.message}</span>
 						)}
@@ -111,7 +141,6 @@ export default function RegisterPage() {
 								className={styles.password}
 								placeholder="Confirme a senha"
 								onChange={(event) => setConfirmPassword(event.target.value)}
-
 							/>
 							<button className={styles.eyeButton} onClick={() => setShowConfirmPassword(!showConfirmPassword)} type='button'>
 								{showConfirmPassword ? (
@@ -130,7 +159,8 @@ export default function RegisterPage() {
 						className={styles.submitButton}
 						disabled={
 							!isValid ||
-							isSubmitting
+							isSubmitting ||
+							!isPasswordValid
 						}
 					>
 						Criar Conta
