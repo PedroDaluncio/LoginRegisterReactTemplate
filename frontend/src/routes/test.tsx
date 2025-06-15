@@ -1,16 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "./components/ui/input"
-import { Label } from "./components/ui/label"
+import { Input } from "../components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { loginSchema } from "./schemas"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./components/ui/form"
+import { loginSchema } from "../schemas"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../components/ui/form"
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
-export default function App() {
+export default function Test() {
   const [activeBtn, setActiveBtn] = useState("Fazer Login")
   const [showPassword, setShowPassword] = useState(false)
   const form = useForm<z.infer<typeof loginSchema>>({
