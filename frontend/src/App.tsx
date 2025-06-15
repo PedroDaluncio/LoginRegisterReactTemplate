@@ -6,17 +6,13 @@ import { Label } from "./components/ui/label"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
-const loginSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string()
-    .min(6, "Senha deve ter pelo menos 6 caracteres")
-    .regex(/[A-Z]/, "Senha deve conter pelo menos uma letra maiúscula")
-    .regex(/[!@#$%^&*(),.?":{}|<>]/, "Senha deve conter pelo menos um caractere especial"),
-})
+import { loginSchema } from "./schemas"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./components/ui/form"
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function App() {
   const [activeBtn, setActiveBtn] = useState("Fazer Login")
+  const [showPassword, setShowPassword] = useState(false)
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,10 +41,56 @@ export default function App() {
             onClick={() => setActiveBtn("Criar Conta")}
           >Criar Conta</button>
         </div>
-        <div className="flex flex-col gap-1 w-[80%]">
-          <Label htmlFor="email" className="text-3x1">Email:</Label>
-          <Input type="email" id="email" placeholder="seu@email.com" className="bg-white"/>
-        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-[80%]">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormLabel>Email:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="seu@email.com" className="bg-white" {...field}/>
+                  </FormControl>
+                  { fieldState.error && (
+                    <FormMessage> {fieldState.error.message} </FormMessage>
+                  )}
+                </FormItem >
+              )}
+            >
+            </FormField>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormLabel>Senha:</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="@Suasenha1234"
+                      className="bg-white pr-10"
+                      {...field}
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        { showPassword ? <IoEye /> : <IoEyeOff /> }
+                      </button>
+                    </div>
+                  </FormControl>
+                  { fieldState.error && (
+                    <FormMessage> {fieldState.error.message} </FormMessage>
+                  )}
+                </FormItem >
+              )}
+            >
+            </FormField>
+          </form>
+        </Form>
       </div>
     </main>
   )
