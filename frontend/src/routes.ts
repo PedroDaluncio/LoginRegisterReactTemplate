@@ -5,6 +5,5 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  index("routes/test.tsx")
-
+  route("/auth", "routes/auth/auth.tsx")
 ] satisfies RouteConfig
